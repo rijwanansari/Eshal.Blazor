@@ -1,0 +1,31 @@
+﻿@typeparam TMessage
+
+<div class="message-container">
+    @if (ShowMessage)
+    {
+        <div class="message-box @MessageTypeClass">
+            <span class="message-content">@MessageContent</span>
+            <button class="close-button" @onclick="HideMessage">x</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public TMessage MessageContent { get; set; }
+    [Parameter] public string MessageType { get; set; } = "success"; // default to success
+    [Parameter] public bool ShowMessage { get; set; } = true;
+
+    private string MessageTypeClass => MessageType switch
+    {
+        "success" => "message-success",
+        "failure" => "message-failure",
+        "alert" => "message-alert",
+        "warning" => "message-warning",
+        _ => "message-default"
+    };
+
+    private void HideMessage()
+    {
+        ShowMessage = false;
+    }
+}

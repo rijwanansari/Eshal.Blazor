@@ -1,0 +1,52 @@
+﻿body {
+}
+.message-container {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.message-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.message-success {
+    background-color: #28a745;
+}
+
+.message-failure {
+    background-color: #dc3545;
+}
+
+.message-alert {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.message-warning {
+    background-color: #ff8800;
+}
+
+.message-default {
+    background-color: #17a2b8;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .close-button:hover {
+        color: #000;
+    }

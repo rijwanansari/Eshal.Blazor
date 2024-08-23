@@ -1,0 +1,54 @@
+﻿@typeparam TMessage
+
+@if (ShowMessage)
+{
+    <div class="toast-message-container">
+        <div class="toast-message-box @MessageTypeClass">
+            <span class="toast-message-content">@MessageContent</span>
+            <button class="toast-close-button" @onclick="HideMessage">x</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public TMessage MessageContent { get; set; }
+    [Parameter] public string MessageType { get; set; } = "success"; // Default to success
+    [Parameter] public bool ShowMessage { get; set; } = true; // Controls message visibility
+    [Parameter] public int DismissAfter { get; set; } = 0; // Time in seconds to auto-hide, 0 means no auto-hide
+    [Parameter] public EventCallback<bool> ShowMessageChanged { get; set; } // Event to notify parent component
+
+    private string MessageTypeClass => MessageType switch
+    {
+        "success" => "toast-message-success",
+        "failure" => "toast-message-failure",
+        "alert" => "toast-message-alert",
+        "warning" => "toast-message-warning",
+        _ => "toast-message-default"
+    };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ShowMessage && DismissAfter > 0)
+        {
+            await Task.Delay(DismissAfter * 1000);
+            HideMessage();
+        }
+    }
+
+    private void HideMessage()
+    {
+        ShowMessage = false;
+        ShowMessageChanged.InvokeAsync(ShowMessage); // Notify parent component
+    }
+
+    public void Show()
+    {
+        ShowMessage = true;
+        ShowMessageChanged.InvokeAsync(ShowMessage); // Notify parent component
+    }
+
+    public void Hide()
+    {
+        HideMessage();
+    }
+}

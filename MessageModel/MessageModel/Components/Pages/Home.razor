@@ -1,0 +1,36 @@
+﻿@page "/"
+@using MessageModel.Components.Shared
+@rendermode RenderMode.InteractiveServer
+
+<PageTitle>Home</PageTitle>
+<MessageModel TMessage="string" MessageContent="SuccessMessgage" MessageType="success" ShowMessage="@ShowSuccess" />
+<MessageModel TMessage="string" MessageContent="FailureMessgage" MessageType="failure" ShowMessage="@ShowFailure" />
+<h3>Message Demo</h3>
+
+<button class="btn btn-success" @onclick="ShowSuccessMessage">Show Success Message</button>
+<button class="btn btn-danger" @onclick="ShowFailureMessage">Show Failure Message</button>
+<button class="btn btn-primary" @onclick="HideMessage">Hide Message</button>
+
+
+
+@code {
+    private bool ShowSuccess { get; set; } = false;
+    private bool ShowFailure { get; set; } = false;
+    private string SuccessMessgage = "Success Operation!!";
+    private string FailureMessgage = "Fail Operation!!";
+    private void ShowSuccessMessage()
+    {
+        ShowSuccess = true;
+    }
+
+    private void ShowFailureMessage()
+    {
+        ShowFailure = true;
+    }
+
+    private void HideMessage()
+    {
+        ShowSuccess = false;
+        ShowFailure = false;
+    }
+}

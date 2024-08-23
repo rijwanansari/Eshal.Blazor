@@ -1,0 +1,40 @@
+﻿@page "/"
+@using ToastNotification.Components.Shared
+@rendermode RenderMode.InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h3>Toast Message Demo</h3>
+
+<button @onclick="ShowSuccessMessage">Show Success Toast (5 seconds)</button>
+<button @onclick="ShowFailureMessage">Show Failure Toast (3 seconds)</button>
+<button @onclick="HideMessage">Hide Toast Message</button>
+
+<ToastNotification TMessage="string" MessageContent="SuccessMessage" MessageType="success" ShowMessage="@ShowSuccess" DismissAfter="5" ShowMessageChanged="@(isVisible => ShowSuccess = isVisible)" />
+<ToastNotification TMessage="string" MessageContent="FailMessage" MessageType="failure" ShowMessage="@ShowFailure" DismissAfter="3" ShowMessageChanged="@(isVisible => ShowFailure = isVisible)" />
+<ToastNotification TMessage="string" MessageContent="WarningMessae" MessageType="warning" ShowMessage="@ShowFailure" DismissAfter="3" ShowMessageChanged="@(isVisible => ShowFailure = isVisible)" />
+
+@code {
+    private bool ShowSuccess { get; set; } = false;
+    private bool ShowFailure { get; set; } = false;
+    private string SuccessMessage = "Success Operation!!";
+    private string FailMessage = "Fail Operation!!";
+    private string WarningMessae = "Warning Operation!!";
+
+
+    private void ShowSuccessMessage()
+    {
+        ShowSuccess = true;
+    }
+
+    private void ShowFailureMessage()
+    {
+        ShowFailure = true;
+    }
+
+    private void HideMessage()
+    {
+        ShowSuccess = false;
+        ShowFailure = false;
+    }
+}
