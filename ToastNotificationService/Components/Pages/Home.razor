@@ -1,0 +1,35 @@
+﻿@page "/"
+@using ToastNotificationService.ToastMessage
+@inject ToastService ToastService
+@rendermode RenderMode.InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h3>Toast Service Demo</h3>
+
+<button class="btn btn-success" @onclick="ShowSuccessToast">Show Success Toast</button>
+<button class="btn btn-danger" @onclick="ShowFailureToast">Show Failure Toast</button>
+<button class="btn" @onclick="ShowAlertToast">Show Alert Toast</button>
+<button class="btn btn-warning" @onclick="ShowWarningToast">Show Warning Toast</button>
+
+@code {
+    private void ShowSuccessToast()
+    {
+        ToastService.ShowSuccess("Operation Successful!", 5);
+    }
+
+    private void ShowFailureToast()
+    {
+        ToastService.ShowError("This is a failure message!", 5);
+    }
+
+    private void ShowAlertToast()
+    {
+        ToastService.ShowAlert("This is an alert message!", 5);
+    }
+
+    private void ShowWarningToast()
+    {
+        ToastService.ShowWarning("This is an alert message!", 5);
+    }
+}
