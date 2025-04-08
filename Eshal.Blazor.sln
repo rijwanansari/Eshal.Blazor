@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastNotification", "ToastN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastNotificationService", "ToastNotificationService\ToastNotificationService.csproj", "{6DDDAA57-00AA-4CD9-A052-F412948E8AC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditableDynamicTable", "EditableDynamicTable\EditableDynamicTable.csproj", "{C281B25C-81FA-4DFB-B8D3-69F9D240361B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6DDDAA57-00AA-4CD9-A052-F412948E8AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DDDAA57-00AA-4CD9-A052-F412948E8AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DDDAA57-00AA-4CD9-A052-F412948E8AC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C281B25C-81FA-4DFB-B8D3-69F9D240361B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C281B25C-81FA-4DFB-B8D3-69F9D240361B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C281B25C-81FA-4DFB-B8D3-69F9D240361B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C281B25C-81FA-4DFB-B8D3-69F9D240361B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

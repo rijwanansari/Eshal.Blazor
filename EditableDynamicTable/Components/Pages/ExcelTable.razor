@@ -1,0 +1,141 @@
+﻿@page "/excel-table"
+@using EditableDynamicTable.Models
+@using Microsoft.AspNetCore.Components.Forms
+@inject IJSRuntime JS
+@rendermode RenderMode.InteractiveServer
+
+<h3>Dynamic Excel Table</h3>
+
+<InputFile OnChange="UploadExcel" />
+
+<div class="my-3">
+    <button class="btn btn-primary" @onclick="AddColumn">Add Column</button>
+    <button class="btn btn-success" @onclick="AddRow">Add Row</button>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            @foreach (var col in Columns)
+            {
+                <th>
+                    <input class="form-control" value="@col" @onchange="e => RenameColumn(col, e.Value?.ToString())" />
+                    <button class="btn btn-sm btn-danger" @onclick="() => RemoveColumn(col)">x</button>
+                </th>
+            }
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var row in Rows)
+    {
+        <tr>
+            @foreach (var col in Columns)
+            {
+                <td>
+                    <input class="form-control"
+                           value="@GetCellValue(row, col)"
+                           @onchange="e => SetCellValue(row, col, e.Value?.ToString())" />
+                </td>
+            }
+            <td>
+                <button class="btn btn-sm btn-danger" @onclick="() => RemoveRow(row)">Remove</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    private List<string> Columns { get; set; } = new();
+    private List<DynamicRow> Rows { get; set; } = new();
+
+    private void AddColumn()
+    {
+        var colName = $"Column{Columns.Count + 1}";
+        Columns.Add(colName);
+        foreach (var row in Rows)
+            row.Cells[colName] = string.Empty;
+    }
+
+    private void RemoveColumn(string column)
+    {
+        Columns.Remove(column);
+        foreach (var row in Rows)
+            row.Cells.Remove(column);
+    }
+
+    private void RemoveRow(DynamicRow row)
+    {
+        Rows.Remove(row);
+    }
+
+    private void RenameColumn(string oldName, string? newName)
+    {
+        if (string.IsNullOrWhiteSpace(newName) || Columns.Contains(newName)) return;
+
+        int index = Columns.IndexOf(oldName);
+        Columns[index] = newName;
+
+        foreach (var row in Rows)
+        {
+            if (row.Cells.ContainsKey(oldName))
+            {
+                var value = row.Cells[oldName];
+                row.Cells.Remove(oldName);
+                row.Cells[newName] = value;
+            }
+        }
+    }
+
+    private void AddRow()
+    {
+        var newRow = new DynamicRow();
+        foreach (var col in Columns)
+            newRow.Cells[col] = string.Empty;
+        Rows.Add(newRow);
+    }
+
+    private string GetCellValue(DynamicRow row, string column)
+    {
+        return row.Cells.TryGetValue(column, out var value) ? value : string.Empty;
+    }
+
+    private void SetCellValue(DynamicRow row, string column, string? value)
+    {
+        row.Cells[column] = value ?? string.Empty;
+    }
+
+    private async Task UploadExcel(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file == null) return;
+
+        using var ms = new MemoryStream();
+        await file.OpenReadStream().CopyToAsync(ms);
+        ms.Position = 0;
+
+        //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using var package = new ExcelPackage(ms);
+        var worksheet = package.Workbook.Worksheets[0];
+        var rowCount = worksheet.Dimension.Rows;
+        var colCount = worksheet.Dimension.Columns;
+
+        Columns.Clear();
+        Rows.Clear();
+
+        for (int col = 1; col <= colCount; col++)
+            Columns.Add(worksheet.Cells[1, col].Text);
+
+        for (int row = 2; row <= rowCount; row++)
+        {
+            var newRow = new DynamicRow();
+            for (int col = 1; col <= colCount; col++)
+            {
+                var column = Columns[col - 1];
+                newRow.Cells[column] = worksheet.Cells[row, col].Text;
+            }
+            Rows.Add(newRow);
+        }
+    }
+}
