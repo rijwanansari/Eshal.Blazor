@@ -112,18 +112,18 @@ Use the implementation in:
 From repository root:
 
 - MessageModel  
-  `dotnet run --project /home/runner/work/Eshal.Blazor/Eshal.Blazor/MessageModel/MessageModel/MessageModel.csproj`
+  `dotnet run --project MessageModel/MessageModel/MessageModel.csproj`
 - ToastNotification  
-  `dotnet run --project /home/runner/work/Eshal.Blazor/Eshal.Blazor/ToastNotification/ToastNotification.csproj`
+  `dotnet run --project ToastNotification/ToastNotification.csproj`
 - ToastNotificationService  
-  `dotnet run --project /home/runner/work/Eshal.Blazor/Eshal.Blazor/ToastNotificationService/ToastNotificationService.csproj`
+  `dotnet run --project ToastNotificationService/ToastNotificationService.csproj`
 - EditableDynamicTable  
-  `dotnet run --project /home/runner/work/Eshal.Blazor/Eshal.Blazor/EditableDynamicTable/EditableDynamicTable.csproj`
+  `dotnet run --project EditableDynamicTable/EditableDynamicTable.csproj`
 
 ---
 
 ## Build
 
 ```bash
-dotnet build /home/runner/work/Eshal.Blazor/Eshal.Blazor/Eshal.Blazor.sln
+dotnet build Eshal.Blazor.sln
 ```
